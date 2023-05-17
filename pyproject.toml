@@ -1,0 +1,97 @@
+# This is a dummy package used to maintain version pins for Plone.
+# It must never be released: there is no point to that.
+
+[build-system]
+# possibly add mxdev in here, pip-tools, wheel, requests, whatever we want,
+# although I hope these then do not get installed in the current venv.
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "plonecoredev"
+version = "6.1.0a1.dev0"
+description = "Dummy package to help Plone 6 core development"
+requires-python = ">=3.8"
+# All our dependencies are extras, or optional dependencies.
+# This makes it possible to update e.g. only test dependencies.
+dependencies = []
+
+[project.optional-dependencies]
+core = [
+    "Plone",
+]
+buildout = [
+    # Add all recipes and extensions from the buildout configs here.
+    "collective.recipe.omelette",
+    "collective.recipe.template",
+    "collective.recipe.vscode",
+    "collective.xmltestreport",
+    "mr.developer",
+    "plone.recipe.precompiler",
+    "plone.recipe.zeoserver",
+    "plone.recipe.zope2instance",
+    "plone.versioncheck",
+    "zc.buildout",
+    "zc.recipe.egg",
+]
+ecosystem = [
+    "collective.z3cform.datagridfield",
+    "plone.app.debugtoolbar",
+    "plone.app.mosaic",
+    "plone.jsonserializer",
+    "Products.PDBDebugMode",
+    "Products.PrintingMailHost",
+    "z3c.jbot",
+    "z3c.unconfigure",
+]
+test = [
+    # Here we want all packages in tests.cfg in test-eggs
+    # that have a test/tests extra.
+    "diazo [test]",
+    "plone.api [test]",
+    "plone.app.caching [test]",
+    "plone.app.contentlisting [test]",
+    "plone.app.contenttypes [test]",
+    "plone.app.discussion [test]",
+    "plone.app.event [test]",
+    "plone.app.iterate [test]",
+    "plone.app.layout [test]",
+    "plone.app.linkintegrity [test]",
+    "plone.app.portlets [test]",
+    "plone.app.testing [test]",
+    "plone.app.textfield [tests]",
+    "plone.app.theming [test]",
+    "plone.app.upgrade [test]",
+    "plone.app.users [test]",
+    "plone.app.versioningbehavior [tests]",
+    "plone.app.widgets [test]",
+    "plone.app.z3cform [tests]",
+    "plone.cachepurging [test]",
+    "plone.dexterity [test]",
+    "plone.event [test]",
+    "plone.namedfile [test]",
+    "plone.outputfilters [test]",
+    "plone.resource [test]",
+    "plone.resourceeditor [test]",
+    "plone.rest [test]",
+    "plone.restapi [test]",
+    "plone.schemaeditor [test]",
+    "plone.subrequest [test]",
+    "plone.supermodel [test]",
+    "plone.testing [test]",
+    "plone.transformchain [test]",
+    "plone.uuid [test]",
+    "plone.volto [test]",
+    "plone.z3cform [test]",
+    "Products.CMFPlacefulWorkflow [test]",
+    "Products.CMFPlone [test]",
+    "Products.DateRecurringIndex [test]",
+]
+tools = [
+    "plone.releaser",
+    "zest.releaser[recommended]",
+]
+
+[tool.setuptools]
+# This is a dummy package without code.
+packages = []

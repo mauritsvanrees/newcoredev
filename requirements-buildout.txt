@@ -1,0 +1,6 @@
+-r requirements-pip.txt
+zc.buildout==3.0.1
+
+# Windows specific down here (has to be installed here, fails in buildout)
+# Dependency of zope.sendmail:
+pywin32 ; platform_system == 'Windows'

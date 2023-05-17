@@ -1,0 +1,6 @@
+pip==23.0.1
+setuptools==67.6.1
+wheel==0.40.0
+
+# SSL Certs on windows, because Python is missing them otherwise:
+certifi ; platform_system == 'Windows'
