@@ -95,3 +95,23 @@ tools = [
 [tool.setuptools]
 # This is a dummy package without code.
 packages = []
+
+[tool.plonecoredev]
+# Our own settings.
+
+# feature / bugfix / major
+default_target = "feature"
+
+# For some packages, major releases are fine.
+# This will be true for most calender based releases.
+major = [
+    "certifi",
+    "pytz",
+    "trove-classifiers",
+]
+# Other packages should be bugfix only.
+# Not mentioned packages can get feature releases.
+bugfix = [
+    "Plone",
+    "Products.CMFPlone",
+]
