@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import subprocess
 import sys
 
@@ -72,9 +74,37 @@ def get_range(pin):
     return f"{minimum}, =={version_part}.*"
 
 
+# Read the constraints file.
+constraints = get_constraints()
+
 # Write the ranges file.
 print(f"Writing {RANGES_FILE}")
 with open(RANGES_FILE, "w") as myfile:
-    for pin in get_constraints():
+    for pin in constraints:
         dep = get_range(pin)
         myfile.write(f"{dep}\n")
+
+
+# Write the buildout versions file.
+BUILDOUT_FILE = "versions.cfg"
+print(f"Writing {BUILDOUT_FILE}")
+with open(BUILDOUT_FILE, "w") as myfile:
+    myfile.write("[versions]\n")
+    markers = defaultdict(list)
+    for pin in constraints:
+        if ";" in pin:
+            pin, marker = pin.split(";")
+            marker = marker.strip()
+        else:
+            marker = ""
+        pin = pin.replace("==", " = ")
+        if marker:
+            markers[marker].append(pin)
+            continue
+        # Write to main versions section.
+        myfile.write(f"{pin}\n")
+
+    for marker in sorted(markers.keys()):
+        myfile.write(f"\n[versions:{marker}]\n")
+        for pin in markers[marker]:
+            myfile.write(f"{pin}\n")
