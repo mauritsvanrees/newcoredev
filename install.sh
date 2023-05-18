@@ -1,4 +1,8 @@
 #!/bin/sh
+if test ! -f bin/pip; then
+    echo "Creating virtualenv..."
+    `which python3.11` -m venv .
+fi
 if test $# -ne 1; then
     cat <<EOF
 Create virtualenv (if it does exist yet) and pip-install Plone and friends.
@@ -24,10 +28,6 @@ Special:
 Look in the scripts directory for more scripts.
 EOF
     exit
-fi
-if test ! -f bin/pip; then
-    echo "Creating virtualenv..."
-    `which python3.11` -m venv .
 fi
 EXTRAS=$1
 if test $EXTRAS == "default"; then
