@@ -100,7 +100,9 @@ packages = []
 # Our own settings.
 
 # feature / bugfix / major
-default_target = "feature"
+default_target = "bugfix"
+
+# TODO: add setting to allow pre releases.  False by default.
 
 # For some packages, major releases are fine.
 # This will be true for most calender based releases.
