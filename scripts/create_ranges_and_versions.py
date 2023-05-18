@@ -32,9 +32,10 @@ def get_constraints():
     """Read constraints.txt.
 
     We return the list of constraints.
+    We sort it case insensitively.
     """
     with open(CONSTRAINTS_FILE) as myfile:
-        return myfile.read().splitlines()
+        return sorted(myfile.read().splitlines(), key=str.lower)
 
 
 def get_target(package):
