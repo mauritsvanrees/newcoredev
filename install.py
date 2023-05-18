@@ -38,21 +38,24 @@ def run(command, **kwargs):
     return subprocess.run(command, check=True, **kwargs)
 
 
-EXTRAS = sys.arg[-1]
+# Directory where this file is.
+MAIN_DIR = os.path.dirname(os.path.realpath(__file__))
+EXTRAS = sys.argv[-1]
+
 if EXTRAS == "default":
     EXTRAS = "core,buildout,test,ecosystem"
 print("Installing base requirements (mainly pip, setuptools, zc.buildout when needed.")
 if "full" in EXTRAS or "buildout" in EXTRAS or "ranges" in EXTRAS:
     # The extras contain buildout.
-    req = "requirements-buildout.txt"
+    req = f"{MAIN_DIR}/requirements-buildout.txt"
 else:
-    req = "requirements.txt"
+    req = f"{MAIN_DIR}/requirements.txt"
 run(["./bin/pip", "install", "-r", req])
 
 print("Installing/updating the requested packages.")
 if EXTRAS == "full":
     print("Explicitly installing every package in constraints.txt")
-    run(["./bin/pip", "install", "-r", "constraints.txt"])
+    run(["./bin/pip", "install", "-r", f"{MAIN_DIR}/constraints.txt"])
 elif EXTRAS == "ranges":
     print("Eagerly upgrading to newer versions for all packages in ranges.txt.")
     run(
@@ -63,8 +66,8 @@ elif EXTRAS == "ranges":
             "--upgrade-strategy",
             "eager",
             "-r",
-            "ranges.txt",
+            f"{MAIN_DIR}/ranges.txt",
         ]
     )
 else:
-    run(["./bin/pip", "install", f".[{EXTRAS}]", "-c", "constraints.txt"])
+    run(["./bin/pip", "install", f".[{EXTRAS}]", "-c", f"{MAIN_DIR}/constraints.txt"])
