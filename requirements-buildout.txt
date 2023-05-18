@@ -1,4 +1,4 @@
--r requirements-pip.txt
+-r requirements.txt
 zc.buildout==3.0.1
 
 # Windows specific down here (has to be installed here, fails in buildout)
