@@ -1,5 +1,7 @@
 from collections import defaultdict
+from pathlib import Path
 
+import os
 import subprocess
 import sys
 
@@ -11,10 +13,12 @@ except ImportError:
     import tomli as tomllib
 
 
-CONSTRAINTS_FILE = "constraints.txt"
-RANGES_FILE = "ranges.txt"
+MAIN_DIR = Path(os.path.dirname(os.path.realpath(__file__))) / os.pardir
+CONSTRAINTS_FILE = MAIN_DIR / "constraints.txt"
+RANGES_FILE = MAIN_DIR / "ranges.txt"
+
 # Get our config.
-with open("pyproject.toml", "rb") as myfile:
+with open(MAIN_DIR / "pyproject.toml", "rb") as myfile:
     # Example:
     # {'bugfix': [], 'major': ['certifi', 'pytz', 'trove-classifiers']}
     config = tomllib.load(myfile)["tool"]["plonecoredev"]
