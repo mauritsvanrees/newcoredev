@@ -10,7 +10,16 @@ try:
     import tomllib
 except ImportError:
     # Python 3.10-
-    import tomli as tomllib
+    try:
+        import tomli as tomllib
+    except ModuleNotFoundError:
+        print("For this script we need Python 3.11+ or tomli.")
+        print("Installing tomli...")
+        process = subprocess.run(
+            ["bin/pip", "install", "tomli"],
+            check=True,
+        )
+        import tomli as tomllib
 
 
 MAIN_DIR = Path(os.path.dirname(os.path.realpath(__file__))) / os.pardir
