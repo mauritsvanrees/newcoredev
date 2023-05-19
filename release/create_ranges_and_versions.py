@@ -25,6 +25,7 @@ except ImportError:
 MAIN_DIR = Path(os.path.dirname(os.path.realpath(__file__))) / os.pardir
 CONSTRAINTS_FILE = MAIN_DIR / "constraints.txt"
 RANGES_FILE = MAIN_DIR / "ranges.txt"
+BUILDOUT_FILE = MAIN_DIR / "versions.cfg"
 
 # Get our config.
 with open(MAIN_DIR / "pyproject.toml", "rb") as myfile:
@@ -100,7 +101,6 @@ with open(RANGES_FILE, "w") as myfile:
 
 
 # Write the buildout versions file.
-BUILDOUT_FILE = "versions.cfg"
 print(f"Writing {BUILDOUT_FILE}")
 with open(BUILDOUT_FILE, "w") as myfile:
     myfile.write("[versions]\n")
