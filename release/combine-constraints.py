@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 """Combine all constraints*.txt into one constraints.txt.
 """
+import os
+import sys
 from collections import defaultdict
 from pathlib import Path
 
-import os
-import sys
-
-
-MAIN_DIR = Path(os.path.dirname(os.path.realpath(__file__))) / os.pardir
+MAIN_DIR = Path(os.path.dirname(__file__)) / os.pardir
 
 
 def parse_file(filename):
+    if not filename.exists():
+        print(f"ERROR: {filename} does not exist.")
+        sys.exit(1)
+    print(f"Parsing {os.path.realpath(filename)}")
     mapping = {}
-    with open(filename) as myfile:
+    with filename.open() as myfile:
         for line in myfile.read().splitlines():
             if "==" not in line:
                 continue
@@ -23,19 +25,10 @@ def parse_file(filename):
 
 
 constraints = MAIN_DIR / "constraints.txt"
-constraints38 = MAIN_DIR / "venvs" / "38" / "constraints.txt"
-constraints39 = MAIN_DIR / "venvs" / "39" / "constraints.txt"
-constraints310 = MAIN_DIR / "venvs" / "310" / "constraints.txt"
-constraints311 = MAIN_DIR / "venvs" / "311" / "constraints.txt"
-for filename in (constraints38, constraints39, constraints310, constraints311):
-    if not os.path.exists(filename):
-        print(f"ERROR: {filename} does not exist.")
-        sys.exit(1)
-
-c38 = parse_file(constraints38)
-c39 = parse_file(constraints39)
-c310 = parse_file(constraints310)
-c311 = parse_file(constraints311)
+c38 = parse_file(MAIN_DIR / "venvs" / "38" / "constraints.txt")
+c39 = parse_file(MAIN_DIR / "venvs" / "39" / "constraints.txt")
+c310 = parse_file(MAIN_DIR / "venvs" / "310" / "constraints.txt")
+c311 = parse_file(MAIN_DIR / "venvs" / "311" / "constraints.txt")
 
 # Gather them all in one dictionary.
 pins = defaultdict(dict)
@@ -88,4 +81,6 @@ output = "\n".join(combi) + "\n"
 assert "==None" not in output
 with open(constraints, "w") as myfile:
     myfile.write(output)
-print(f"Wrote combined constraints for all Python versions to {constraints}.")
+print(
+    f"Wrote combined constraints for all Python versions to {os.path.realpath(constraints)}."
+)
