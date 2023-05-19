@@ -6,9 +6,16 @@
 # And we exclude editable packages.
 import subprocess
 
-
 process = subprocess.run(
-    ["bin/pip", "freeze", "--exclude-editable", "--exclude", "plonecoredev", "--exclude", "zc.buildout"],
+    [
+        "bin/pip",
+        "freeze",
+        "--exclude-editable",
+        "--exclude",
+        "plonecoredev",
+        "--exclude",
+        "zc.buildout",
+    ],
     check=True,
     capture_output=True,
     text=True,
