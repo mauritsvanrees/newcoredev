@@ -4,7 +4,9 @@
 # We are happy to follow pip's lead here.
 # We also exclude zc.buildout and our dummy plonecoredev package.
 # And we exclude editable packages.
+import os
 import subprocess
+
 
 process = subprocess.run(
     [
@@ -20,5 +22,7 @@ process = subprocess.run(
     capture_output=True,
     text=True,
 )
-with open("constraints.txt", "w") as myfile:
+FILENAME = "constraints.txt"
+with open(FILENAME, "w") as myfile:
     myfile.write("\n".join(sorted(process.stdout.splitlines(), key=str.lower)))
+print(f"Wrote {os.getcwd()}/{FILENAME}")
